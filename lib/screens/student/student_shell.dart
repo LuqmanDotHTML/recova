@@ -4,6 +4,7 @@ import 'my_reports_screen.dart';
 import 'notifications_screen.dart';
 import 'profile_screen.dart';
 import 'report_lost_screen.dart';
+import 'report_found_screen.dart';
 
 class StudentShell extends StatefulWidget {
   const StudentShell({super.key});
@@ -15,7 +16,7 @@ class _StudentShellState extends State<StudentShell> {
   int _index = 0;
   final _screens = const [
     StudentHomeScreen(),
-    SizedBox(), // placeholder — Report tab opens a page instead
+    SizedBox(), // placeholder — Report tab opens bottom sheet
     MyReportsScreen(),
     NotificationsScreen(),
     ProfileScreen(),
@@ -29,7 +30,6 @@ class _StudentShellState extends State<StudentShell> {
         selectedIndex: _index,
         onDestinationSelected: (i) {
           if (i == 1) {
-            // Show bottom sheet to pick lost or found
             _showReportOptions();
           } else {
             setState(() => _index = i);
@@ -49,7 +49,7 @@ class _StudentShellState extends State<StudentShell> {
   void _showReportOptions() {
     showModalBottomSheet(
       context: context,
-      builder: (_) => SafeArea(
+      builder: (ctx) => SafeArea(
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -63,8 +63,8 @@ class _StudentShellState extends State<StudentShell> {
               title: const Text('I lost something'),
               subtitle: const Text('Report an item you\'ve lost'),
               onTap: () {
-                Navigator.pop(context);
-                Navigator.push(context, MaterialPageRoute(builder: (_) => const ReportLostScreen()));
+                Navigator.pop(ctx);
+                Navigator.push(context, MaterialPageRoute(builder: (context) => const ReportLostScreen()));
               },
             ),
             ListTile(
@@ -72,8 +72,8 @@ class _StudentShellState extends State<StudentShell> {
               title: const Text('I found something'),
               subtitle: const Text('Report an item you\'ve found'),
               onTap: () {
-                Navigator.pop(context);
-                Navigator.push(context, MaterialPageRoute(builder: (_) => const ReportFoundScreen()));
+                Navigator.pop(ctx);
+                Navigator.push(context, MaterialPageRoute(builder: (context) => const ReportFoundScreen()));
               },
             ),
             const SizedBox(height: 16),

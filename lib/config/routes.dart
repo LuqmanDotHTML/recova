@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../screens/auth/splash_screen.dart';
 import '../screens/auth/login_screen.dart';
@@ -35,34 +34,34 @@ class AppRoutes {
 final GoRouter appRouter = GoRouter(
   initialLocation: AppRoutes.splash,
   routes: [
-    GoRoute(path: AppRoutes.splash, builder: (_, _) => const SplashScreen()),
-    GoRoute(path: AppRoutes.login, builder: (_, _) => const LoginScreen()),
-    GoRoute(path: AppRoutes.register, builder: (_, _) => const RegisterScreen()),
-    GoRoute(path: AppRoutes.forgotPassword, builder: (_, _) => const ForgotPasswordScreen()),
-    GoRoute(path: AppRoutes.guestHome, builder: (_, _) => const GuestHomeScreen()),
+    GoRoute(path: AppRoutes.splash, builder: (context, state) => const SplashScreen()),
+    GoRoute(path: AppRoutes.login, builder: (context, state) => const LoginScreen()),
+    GoRoute(path: AppRoutes.register, builder: (context, state) => const RegisterScreen()),
+    GoRoute(path: AppRoutes.forgotPassword, builder: (context, state) => const ForgotPasswordScreen()),
+    GoRoute(path: AppRoutes.guestHome, builder: (context, state) => const GuestHomeScreen()),
     GoRoute(
       path: '/guest/item/:id',
-      builder: (_, state) => GuestItemDetailScreen(reportId: state.pathParameters['id']!),
+      builder: (context, state) => GuestItemDetailScreen(reportId: state.pathParameters['id']!),
     ),
-    GoRoute(path: AppRoutes.studentHome, builder: (_, _) => const StudentShell()),
+    GoRoute(path: AppRoutes.studentHome, builder: (context, state) => const StudentShell()),
     GoRoute(
       path: '/student/item/:id',
-      builder: (_, state) => ItemDetailScreen(reportId: state.pathParameters['id']!),
+      builder: (context, state) => ItemDetailScreen(reportId: state.pathParameters['id']!),
     ),
-    GoRoute(path: AppRoutes.reportLost, builder: (_, _) => const ReportLostScreen()),
-    GoRoute(path: AppRoutes.reportFound, builder: (_, _) => const ReportFoundScreen()),
+    GoRoute(path: AppRoutes.reportLost, builder: (context, state) => const ReportLostScreen()),
+    GoRoute(path: AppRoutes.reportFound, builder: (context, state) => const ReportFoundScreen()),
     GoRoute(
       path: '/student/report/:id',
-      builder: (_, state) => ReportDetailScreen(reportId: state.pathParameters['id']!),
+      builder: (context, state) => ReportDetailScreen(reportId: state.pathParameters['id']!),
     ),
     GoRoute(
       path: '/student/chat/:reportId',
-      builder: (_, state) => ChatScreen(reportId: state.pathParameters['reportId']!),
+      builder: (context, state) => ChatScreen(reportId: state.pathParameters['reportId']!),
     ),
-    GoRoute(path: AppRoutes.adminHome, builder: (_, _) => const AdminShell()),
+    GoRoute(path: AppRoutes.adminHome, builder: (context, state) => const AdminShell()),
     GoRoute(
       path: '/admin/report/:id',
-      builder: (_, state) => AdminReportDetailScreen(reportId: state.pathParameters['id']!),
+      builder: (context, state) => AdminReportDetailScreen(reportId: state.pathParameters['id']!),
     ),
   ],
 );

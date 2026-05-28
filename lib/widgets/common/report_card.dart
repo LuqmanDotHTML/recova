@@ -34,11 +34,11 @@ class ReportCard extends StatelessWidget {
                   ? CachedNetworkImage(
                       imageUrl: report.imageUrl!,
                       fit: BoxFit.cover,
-                      placeholder: (_, _) => Container(
+                      placeholder: (context, url) => Container(
                         color: theme.colorScheme.surfaceContainerHighest,
                         child: const Icon(Icons.image, size: 32),
                       ),
-                      errorWidget: (_, _, _) => Container(
+                      errorWidget: (context, url, error) => Container(
                         color: theme.colorScheme.surfaceContainerHighest,
                         child: const Icon(Icons.broken_image, size: 32),
                       ),

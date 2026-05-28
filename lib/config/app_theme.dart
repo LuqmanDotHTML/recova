@@ -31,7 +31,7 @@ class AppTheme {
           fontSize: 20, fontWeight: FontWeight.w600, color: AppColors.onSurfaceLight,
         ),
       ),
-      cardTheme: CardTheme(
+      cardTheme: CardThemeData(
         color: AppColors.surfaceLight,
         elevation: 0,
         shape: RoundedRectangleBorder(
@@ -130,7 +130,7 @@ class AppTheme {
           fontSize: 20, fontWeight: FontWeight.w600, color: AppColors.onSurfaceDark,
         ),
       ),
-      cardTheme: CardTheme(
+      cardTheme: CardThemeData(
         color: AppColors.surfaceDark,
         elevation: 0,
         shape: RoundedRectangleBorder(

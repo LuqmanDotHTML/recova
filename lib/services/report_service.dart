@@ -5,21 +5,23 @@ import '../models/category_model.dart';
 class ReportService {
   final _client = Supabase.instance.client;
 
-  // Fetch all approved reports (for home feed / guest)
+  // Fetch approved reports (home feed / guest)
   Future<List<Report>> getApprovedReports({String? search, int? categoryId}) async {
     var query = _client
         .from('reports')
         .select('*, profiles(full_name, student_id), categories(name, icon)')
-        .inFilter('status', ['approved', 'recovered'])
-        .order('created_at', ascending: false);
+        .inFilter('status', ['approved', 'recovered']);
 
+    // Apply filters BEFORE .order()
     if (categoryId != null) {
       query = query.eq('category_id', categoryId);
     }
 
-    final response = await query;
+    final response = await query.order('created_at', ascending: false);
+
     List<Report> reports = (response as List).map((e) => Report.fromJson(e)).toList();
 
+    // Client-side text search
     if (search != null && search.isNotEmpty) {
       final lower = search.toLowerCase();
       reports = reports.where((r) =>
@@ -37,14 +39,14 @@ class ReportService {
     var query = _client
         .from('reports')
         .select('*, categories(name, icon)')
-        .eq('user_id', userId)
-        .order('created_at', ascending: false);
+        .eq('user_id', userId);
 
+    // Apply status filter BEFORE .order()
     if (statusFilter != null) {
       query = query.eq('status', statusFilter);
     }
 
-    final response = await query;
+    final response = await query.order('created_at', ascending: false);
     return (response as List).map((e) => Report.fromJson(e)).toList();
   }
 
@@ -87,7 +89,7 @@ class ReportService {
     await _client.from('reports').update(updates).eq('id', id);
   }
 
-  // Delete own report
+  // Delete report
   Future<void> deleteReport(String id) async {
     await _client.from('reports').delete().eq('id', id);
   }
@@ -105,13 +107,17 @@ class ReportService {
   Future<List<Report>> getAllReports({String? statusFilter, String? typeFilter}) async {
     var query = _client
         .from('reports')
-        .select('*, profiles(full_name, student_id), categories(name, icon)')
-        .order('created_at', ascending: false);
+        .select('*, profiles(full_name, student_id), categories(name, icon)');
 
-    if (statusFilter != null) query = query.eq('status', statusFilter);
-    if (typeFilter != null) query = query.eq('type', typeFilter);
+    // Apply ALL filters before .order()
+    if (statusFilter != null) {
+      query = query.eq('status', statusFilter);
+    }
+    if (typeFilter != null) {
+      query = query.eq('type', typeFilter);
+    }
 
-    final response = await query;
+    final response = await query.order('created_at', ascending: false);
     return (response as List).map((e) => Report.fromJson(e)).toList();
   }
 
